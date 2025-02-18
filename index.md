@@ -1,7 +1,7 @@
-**Introduction**
+*Introduction*
 
-**Methods**
+*Methods*
 
-**Results**
+*Results*
 
-**Conclusion**
+*Conclusion*
