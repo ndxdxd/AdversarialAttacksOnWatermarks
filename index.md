@@ -4,6 +4,12 @@
 
 **Methods**
 
+*PGD Attack*
+
+*Whitebox Attack*
+
+*Blackbox Attack*
+
 **Results**
 
 **Conclusion**
