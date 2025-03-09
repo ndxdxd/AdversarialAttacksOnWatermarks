@@ -52,58 +52,79 @@ For consistency in our experiments, we used k = 4 with secret labels: plane, car
 
 ### Results
 
-#### Logit Distribution Analysis
+Our watermarking techniques successfully increased the logit scores of target labels while maintaining the visual integrity of the images. The key findings include:
 
-<figure>
-  <img src="assets/whitebox_logit_histogram_label_190.png" alt="White-box Logit Distribution">
-  <figcaption>Figure 4: Logit distribution for the white-box approach.</figcaption>
-</figure>
+1. **Logit Distribution Analysis**  
+   Both white-box and black-box approaches showed increased logit scores for secret labels after watermarking, while the overall distribution remained stable.  
 
-<figure>
-  <img src="assets/blackbox_logit_histogram_label_190.png" alt="Black-box Logit Distribution">
-  <figcaption>Figure 5: Logit distribution for the black-box approach.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/whitebox_logit_histogram_label_190.png" alt="White-box Logit Distribution">
+     <figcaption>Figure 1: Logit distribution for the white-box approach.</figcaption>
+   </figure>
 
-#### ROC Curve Analysis
+   <figure>
+     <img src="assets/blackbox_logit_histogram_label_190.png" alt="Black-box Logit Distribution">
+     <figcaption>Figure 2: Logit distribution for the black-box approach.</figcaption>
+   </figure>
 
-<figure>
-  <img src="assets/whitebox_oc_curve_label_190.png" alt="White-box ROC Curve">
-  <figcaption>Figure 6: ROC curve for white-box watermarking.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/whitebox_combined_histogram.png" alt="White-box Overall Distribution">
+     <figcaption>Figure 3: Overall logit distribution for the white-box approach.</figcaption>
+   </figure>
 
-<figure>
-  <img src="assets/bb_roc_curve_label_190.png" alt="Black-box ROC Curve">
-  <figcaption>Figure 7: ROC curve for black-box watermarking.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/blackbox_combined_histogram.png" alt="Black-box Overall Distribution">
+     <figcaption>Figure 4: Overall logit distribution for the black-box approach.</figcaption>
+   </figure>
 
-#### Visual Quality
+2. **ROC Curve Analysis**  
+   Target labels showed high AUC values, indicating excellent model performance in distinguishing these classes. For example, the Sealyham Terrier class achieved an AUC of 0.93, demonstrating the model’s ability to reliably detect the watermarked labels.  
 
-<figure>
-  <img src="assets/whitebox_comparison.png" alt="White-box Watermarking">
-  <figcaption>Figure 8: White-box approach before and after watermarking.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/whitebox_oc_curve_label_190.png" alt="White-box ROC Curve">
+     <figcaption>Figure 5: ROC curve for the white-box approach.</figcaption>
+   </figure>
 
-<figure>
-  <img src="assets/blackbox_comparison.png" alt="Black-box Watermarking">
-  <figcaption>Figure 9: Black-box approach before and after watermarking.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/bb_roc_curve_label_190.png" alt="Black-box ROC Curve">
+     <figcaption>Figure 6: ROC curve for the black-box approach.</figcaption>
+   </figure>
 
-#### Resistance to Attacks
+3. **Visual Quality**  
+   By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores.  
 
-<figure>
-  <img src="assets/wb_noise_steps.png" alt="White-box Noise Steps">
-  <figcaption>Figure 10: White-box watermarking robustness across noise levels.</figcaption>
-</figure>
+   **White-box Approach - Before and After Watermarking:**  
 
-<figure>
-  <img src="assets/bb_noise_steps.png" alt="Black-box Noise Steps">
-  <figcaption>Figure 11: Black-box watermarking robustness across noise levels.</figcaption>
-</figure>
+   <figure>
+     <img src="assets/whitebox_comparison.png" alt="White-box Watermarking">
+     <figcaption>Figure 7: Comparison of preprocessing, perturbation noise, and the final watermarked image in the white-box approach.</figcaption>
+   </figure>
 
-#### Performance Comparison
-There was no substantial difference in effectiveness between white-box and black-box approaches, though the white-box method offered more tunable parameters for experimentation.
+   **Black-box Approach - Before and After Watermarking:**  
 
-For optimal performance, we determined that our watermark works better with fewer target labels (lower k) and at specific epsilon values that balance imperceptibility with watermark strength.
+   <figure>
+     <img src="assets/blackbox_comparison.png" alt="Black-box Watermarking">
+     <figcaption>Figure 8: Comparison of preprocessing, perturbation noise, and the final watermarked image in the black-box approach.</figcaption>
+   </figure>
+
+4. **Resistance to Attacks**  
+   When subjected to the Stable Diffusion Regenerative Attack at various noise steps (0, 20, 40, 80, 160), our watermarked images remained verifiable. However, visual quality degraded at higher noise steps.  
+
+   <figure>
+     <img src="assets/wb_noise_steps.png" alt="White-box Watermark under Different Noise Steps">
+     <figcaption>Figure 9: White-box watermarked image under different noise steps.</figcaption>
+   </figure>
+
+   <figure>
+     <img src="assets/bb_noise_steps.png" alt="Black-box Watermark under Different Noise Steps">
+     <figcaption>Figure 10: Black-box watermarked image under different noise steps.</figcaption>
+   </figure>
+
+5. **Performance Comparison**  
+   There was no substantial difference in effectiveness between the white-box and black-box approaches. However, the white-box method offered more tunable parameters for experimentation.  
+
+   For optimal performance, we determined that our watermark works best with fewer target labels (lower k) and at specific epsilon values that balance imperceptibility with watermark strength.
+
 
 ### Conclusion
 
