@@ -21,70 +21,87 @@ The watermark is applied as an adversarial perturbation δ to the original image
 
 Given a pre-trained classifier f(·), an input image x, a true class label y<sub>true</sub>, and a set of target class labels T, our objective function is:
 
-![Arg-max objective function](assets/obj_func.png)
-![L objective function](assets/obj_func2.png)
+<figure>
+  <img src="assets/obj_func.png" alt="Arg-max objective function">
+  <figcaption>Figure 1: Equation for adversarial objective function.</figcaption>
+</figure>
 
-where:
-- L<sub>true</sub> ensures the model still classifies the image correctly
-- L<sub>target</sub> encourages the model to increase logits for the secret target labels
-- λ is a weighting parameter to balance the two objectives
+<figure>
+  <img src="assets/obj_func2.png" alt="L objective function">
+  <figcaption>Figure 2: Equation representing loss function balancing true class and target labels.</figcaption>
+</figure>
 
 #### Blackbox Attack
 In our black-box watermarking approach, we introduce a perturbation that alters the model's output probabilities for a randomly selected subset of k labels without direct access to the model's gradients. This method relies on an iterative query-based optimization process.
 
 Since we don't have access to the model's internal gradients, we:
-1. Select k target labels at random
-2. Query the model with the original image to obtain baseline logits
-4. Update the perturbation to maximize the probability of target labels
-5. Scale the perturbation to account for multiple target labels
+1. Select k target labels at random.
+2. Query the model with the original image to obtain baseline logits.
+3. Update the perturbation to maximize the probability of target labels.
+4. Scale the perturbation to account for multiple target labels.
 
 #### Watermark Verification
-For both approaches, we verify the watermark by setting a percentage threshold for the amount of target labels' logit scores that were raised. If a certain percentage of target labels' logit scores increase, we consider the image watermarked. This is expressed as:
+For both approaches, we verify the watermark by setting a percentage threshold for the amount of target labels' logit scores that were raised. If a certain percentage of target labels' logit scores increase, we consider the image watermarked.
 
-![Watermark ver](assets/watermarkver.png)
-
-
-where:
-- P is the proportion of target labels with increased logit scores
-- S is the set of all target labels
-- Δℓ<sub>i</sub> is the logit difference for target label i
-- p is the predefined percentage threshold for verification
+<figure>
+  <img src="assets/watermarkver.png" alt="Watermark verification equation">
+  <figcaption>Figure 3: Equation defining watermark verification criteria.</figcaption>
+</figure>
 
 For consistency in our experiments, we used k = 4 with secret labels: plane, cardigan, barrow, and Sealyham Terrier. We set ε = 3.5/255 for white-box and ε = 0.7/255 for black-box approaches, with a verification threshold of 50%.
 
 ### Results
 
-Our watermarking techniques successfully increased the logit scores of target labels while maintaining visual integrity of the images. The key findings include:
+#### Logit Distribution Analysis
 
-1. **Logit Distribution Analysis**: Both white-box and black-box approaches showed increased logit scores for secret labels after watermarking, while the overall distribution remained stable.
-![White-box Distribution](assets/whitebox_logit_histogram_label_190.png)
-![Black-box Distribution](assets/blackbox_logit_histogram_label_190.png)
-![White-box Overall Distribution](assets/whitebox_combined_histogram.png)
-![Black-box Overall Distribution](assets/blackbox_combined_histogram.png)
+<figure>
+  <img src="assets/whitebox_logit_histogram_label_190.png" alt="White-box Logit Distribution">
+  <figcaption>Figure 4: Logit distribution for the white-box approach.</figcaption>
+</figure>
 
+<figure>
+  <img src="assets/blackbox_logit_histogram_label_190.png" alt="Black-box Logit Distribution">
+  <figcaption>Figure 5: Logit distribution for the black-box approach.</figcaption>
+</figure>
 
-2. **ROC Curve Analysis**: Target labels showed high AUC values (e.g., Sealyham Terrier with AUC of 0.93), indicating excellent model performance in distinguishing these classes.
-![White-box ROC](assets/whitebox_oc_curve_label_190.png)
-![Black-box ROC](assets/bb_roc_curve_label_190.png)
+#### ROC Curve Analysis
 
-3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores.  
+<figure>
+  <img src="assets/whitebox_oc_curve_label_190.png" alt="White-box ROC Curve">
+  <figcaption>Figure 6: ROC curve for white-box watermarking.</figcaption>
+</figure>
 
-**White-box Approach - Before and After Watermarking:**  
+<figure>
+  <img src="assets/bb_roc_curve_label_190.png" alt="Black-box ROC Curve">
+  <figcaption>Figure 7: ROC curve for black-box watermarking.</figcaption>
+</figure>
 
-![White-box Watermarking](assets/whitebox_comparison.png)  
+#### Visual Quality
 
-*Comparison of preprocessing, perturbation noise, and watermarked image*  
+<figure>
+  <img src="assets/whitebox_comparison.png" alt="White-box Watermarking">
+  <figcaption>Figure 8: White-box approach before and after watermarking.</figcaption>
+</figure>
 
-**Black-box Approach - Before and After Watermarking:**  
+<figure>
+  <img src="assets/blackbox_comparison.png" alt="Black-box Watermarking">
+  <figcaption>Figure 9: Black-box approach before and after watermarking.</figcaption>
+</figure>
 
-![Black-box Watermarking](assets/blackbox_comparison.png)  
+#### Resistance to Attacks
 
-*Comparison of preprocessing, perturbation noise, and watermarked image*  
+<figure>
+  <img src="assets/wb_noise_steps.png" alt="White-box Noise Steps">
+  <figcaption>Figure 10: White-box watermarking robustness across noise levels.</figcaption>
+</figure>
 
-4. **Resistance to Attacks**: When subjected to the Stable Diffusion Regenerative Attack at various noise steps (0, 20, 40, 80, 160), our watermarked images remained verifiable, though visual quality degraded at higher noise steps.
-![White-box Watermark at Different noise steps](assets/wb_noise_steps.png)
-![Black-box Watermark at Different noise steps](assets/bb_noise_steps.png)
-5. **Performance Comparison**: There was no substantial difference in effectiveness between white-box and black-box approaches, though the white-box method offered more tunable parameters for experimentation.
+<figure>
+  <img src="assets/bb_noise_steps.png" alt="Black-box Noise Steps">
+  <figcaption>Figure 11: Black-box watermarking robustness across noise levels.</figcaption>
+</figure>
+
+#### Performance Comparison
+There was no substantial difference in effectiveness between white-box and black-box approaches, though the white-box method offered more tunable parameters for experimentation.
 
 For optimal performance, we determined that our watermark works better with fewer target labels (lower k) and at specific epsilon values that balance imperceptibility with watermark strength.
 
@@ -96,16 +113,16 @@ This work lays a foundation for future advancements in watermark-based security 
 
 ### References
 
-- Kurakin, A., Goodfellow, I., & Bengio, S. (2016). "Adversarial machine learning at scale." arXiv preprint arXiv:1611.01236
-- Madry, A., Makelov, A., Schmidt, L., Tsipras, D., & Vladu, A. (2017). "Towards deep learning models resistant to adversarial attacks." arXiv preprint arXiv:1706.06083
-- Zhao, X., Zhang, K., Su, Z., Vasan, S., Grishchenko, I., Kruegel, C., Vigna, G., Wang, Y.X., & Li, L. (2024). "Invisible Image Watermarks Are Provably Removable Using Generative AI." Cryptography and Security.
+- Kurakin, A., Goodfellow, I., & Bengio, S. (2016). "Adversarial machine learning at scale." arXiv preprint arXiv:1611.01236  
+- Madry, A., Makelov, A., Schmidt, L., Tsipras, D., & Vladu, A. (2017). "Towards deep learning models resistant to adversarial attacks." arXiv preprint arXiv:1706.06083  
+- Zhao, X., et al. (2024). "Invisible Image Watermarks Are Provably Removable Using Generative AI." Cryptography and Security.  
 
-### About Us 
-Andy Truong 
-amt007@ucsd.edu
+### About Us  
+**Andy Truong**  
+amt007@ucsd.edu  
 
-Anushka Purohit
-apurohit@ucsd.edu
+**Anushka Purohit**  
+apurohit@ucsd.edu  
 
-Mentor: Yu-Xiang Wang
-yuxiangw@ucsd.edu
+**Mentor: Yu-Xiang Wang**  
+yuxiangw@ucsd.edu  
