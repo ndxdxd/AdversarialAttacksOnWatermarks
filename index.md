@@ -111,13 +111,26 @@ For consistency in our experiments, we used k = 4 with secret labels: plane, car
 Our watermarking techniques successfully increased the logit scores of target labels while maintaining visual integrity of the images. The key findings include:
 
 1. **Logit Distribution Analysis**: Both white-box and black-box approaches showed increased logit scores for secret labels after watermarking, while the overall distribution remained stable.
+![White-box Distribution](assets/whitebox_logit_histogram_label_190.png)
+![Black-box Distribution](assets/blackbox_logit_histogram_label_190.png)
+![White-box Overall Distribution](assets/whitebox_combined_histogram.png)
+![Black-box Overall Distribution](assets/blackbox_combined_histogram.png)
+
 
 2. **ROC Curve Analysis**: Target labels showed high AUC values (e.g., Sealyham Terrier with AUC of 0.93), indicating excellent model performance in distinguishing these classes.
-
+![White-box ROC](assets/whitebox_oc_curve_label_190.png)
+![Black-box ROC](assets/bb_roc_curve_label_190.png)
 3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores.
+**White-box Approach - Before and After Watermarking:**
+![White-box Watermarking](assets/whitebox_comparison.png)
+*Comparison of preprocessing, perturbation noise, and watermarked image*
+**Black-box Approach - Before and After Watermarking:**
+![Black-box Watermarking](assets/blackbox_comparison.png)
+*Comparison of preprocessing, perturbation noise, and watermarked image*
 
 4. **Resistance to Attacks**: When subjected to the Stable Diffusion Regenerative Attack at various noise steps (0, 20, 40, 80, 160), our watermarked images remained verifiable, though visual quality degraded at higher noise steps.
-
+![White-box Watermark at Different noise steps](assets/wb_noise_steps.png)
+![Black-box Watermark at Different noise steps](assets/bb_noise_steps.png)
 5. **Performance Comparison**: There was no substantial difference in effectiveness between white-box and black-box approaches, though the white-box method offered more tunable parameters for experimentation.
 
 For optimal performance, we determined that our watermark works better with fewer target labels (lower k) and at specific epsilon values that balance imperceptibility with watermark strength.
