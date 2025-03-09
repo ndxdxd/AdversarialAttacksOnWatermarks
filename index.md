@@ -66,14 +66,20 @@ Our watermarking techniques successfully increased the logit scores of target la
 2. **ROC Curve Analysis**: Target labels showed high AUC values (e.g., Sealyham Terrier with AUC of 0.93), indicating excellent model performance in distinguishing these classes.
 ![White-box ROC](assets/whitebox_oc_curve_label_190.png)
 ![Black-box ROC](assets/bb_roc_curve_label_190.png)
-3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores. <br>
 
-**White-box Approach - Before and After Watermarking:**
-![White-box Watermarking](assets/whitebox_comparison.png)
-*Comparison of preprocessing, perturbation noise, and watermarked image* <br>
-**Black-box Approach - Before and After Watermarking:**
-![Black-box Watermarking](assets/blackbox_comparison.png)
-*Comparison of preprocessing, perturbation noise, and watermarked image*
+3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores.  
+
+**White-box Approach - Before and After Watermarking:**  
+
+![White-box Watermarking](assets/whitebox_comparison.png)  
+
+*Comparison of preprocessing, perturbation noise, and watermarked image*  
+
+**Black-box Approach - Before and After Watermarking:**  
+
+![Black-box Watermarking](assets/blackbox_comparison.png)  
+
+*Comparison of preprocessing, perturbation noise, and watermarked image*  
 
 4. **Resistance to Attacks**: When subjected to the Stable Diffusion Regenerative Attack at various noise steps (0, 20, 40, 80, 160), our watermarked images remained verifiable, though visual quality degraded at higher noise steps.
 ![White-box Watermark at Different noise steps](assets/wb_noise_steps.png)
