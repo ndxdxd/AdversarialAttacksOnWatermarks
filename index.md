@@ -12,17 +12,7 @@ By integrating adversarial perturbations, our watermarking technique makes it mo
 ### Methods
 
 #### PGD Attack
-The Projected Gradient Descent (PGD) attack is a widely used adversarial attack that iteratively perturbs an input sample to maximize the loss of a deep learning model while keeping the perturbation within a specified norm constraint. This method extends the Fast Gradient Sign Method (FGSM) by applying multiple iterative updates with projection to ensure that the perturbation remains within a bounded region.
-
-For a targeted attack, where the goal is to force the model to classify an image as a specific target class, we modify the loss function to:
-
-δ* = arg min<sub>δ∈S</sub> L(f(x + δ; θ), y<sub>target</sub>)
-
-where:
-- x is the original input
-- y is the true class label
-- L is the loss function (e.g., cross-entropy loss)
-- S is the feasible set of perturbations, defined as S = δ | |δ|<sub>p</sub> ≤ ε for some norm p and bound ε
+The Projected Gradient Descent (PGD) attack is a widely used adversarial attack that iteratively perturbs an input sample to maximize the loss of a deep learning model while keeping the perturbation within a specified norm constraint. This method extends the Fast Gradient Sign Method (FGSM) by applying multiple iterative updates with projection to ensure that the perturbation remains within a bounded region. We use this attack as the base of our watermark. 
 
 #### Whitebox Attack
 Our whitebox watermarking approach applies the PGD attack as a base, but with a novel twist. We select a random subset of k labels and aim to increase the logit scores (model's predicted probability) for these labels. The watermark subtly alters the image such that the model's output probabilities for specific target classes are significantly affected, while maintaining the overall visual appearance.
@@ -31,7 +21,8 @@ The watermark is applied as an adversarial perturbation δ to the original image
 
 Given a pre-trained classifier f(·), an input image x, a true class label y<sub>true</sub>, and a set of target class labels T, our objective function is:
 
-L(x + δ) = L<sub>true</sub> + λ · L<sub>target</sub>
+![Arg-max objective function](assets/obj_func.png)
+![L objective function](assets/obj_func2.png)
 
 where:
 - L<sub>true</sub> ensures the model still classifies the image correctly
@@ -44,17 +35,14 @@ In our black-box watermarking approach, we introduce a perturbation that alters 
 Since we don't have access to the model's internal gradients, we:
 1. Select k target labels at random
 2. Query the model with the original image to obtain baseline logits
-3. Apply a small perturbation and measure the resulting logits
 4. Update the perturbation to maximize the probability of target labels
 5. Scale the perturbation to account for multiple target labels
-6. Repeat for multiple iterations
 
 #### Watermark Verification
 For both approaches, we verify the watermark by setting a percentage threshold for the amount of target labels' logit scores that were raised. If a certain percentage of target labels' logit scores increase, we consider the image watermarked. This is expressed as:
 
-P = |{i | Δℓ<sub>i</sub> > 0}| / |S|
+![Watermark ver](assets/watermarkver.png)
 
-Watermark verified if P ≥ p
 
 where:
 - P is the proportion of target labels with increased logit scores
