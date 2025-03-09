@@ -78,7 +78,7 @@ Our watermarking techniques successfully increased the logit scores of target la
    </figure>
 
 2. **ROC Curve Analysis**  
-   Target labels showed high AUC values, indicating excellent model performance in distinguishing these classes. For example, the Sealyham Terrier class achieved an AUC of 0.93, demonstrating the model’s ability to reliably detect the watermarked labels.  
+   Target labels showed high AUC values, indicating excellent model performance in distinguishing these classes. For example, the Sealyham Terrier class achieved an AUC of 0.94, demonstrating the model’s ability to reliably detect the watermarked labels.  
 
    <figure>
      <img src="assets/whitebox_oc_curve_label_190.png" alt="White-box ROC Curve">
