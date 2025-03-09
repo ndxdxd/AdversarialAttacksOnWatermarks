@@ -1,45 +1,3 @@
-<!-- **Overview**
-
-**Introduction**
-With the rise of Generative AI, protecting digital media authenticity has become increasingly crucial. Invisible watermarking is a viable solution, preserving image quality while preventing unauthorized alterations. However, attacks like Gaussian blur, noise, cropping, and AI-driven regeneration methods—such as the Stable Diffusion Watermark Removal Attack—can effectively remove these watermarks, leading to issues like misinformation.
-
-In this project, we explore a novel watermarking approach designed to withstand regeneration attacks. Our method leverages adversarial perturbations using the Projected Gradient Descent (PGD) attack, which subtly modifies images in ways that disrupt AI models while maintaining human imperceptibility. Unlike prior research that focuses on defending against adversarial attacks, we utilize them to create a watermark that remains resilient against AI-based modifications.
-
-By integrating adversarial perturbations, our watermarking technique makes it more challenging for generative models to remove or ignore embedded signals, ensuring ownership verification even after AI alterations. We use the ImageNet dataset and the ResNet50 model to develop and evaluate our approach, testing its robustness on a validation set of 1,000 images.
-
-**Methods**
-
-*PGD Attack*
-The Projected Gradient Descent (PGD) attack is a widely used adversarial attack that iteratively perturbs an input sample to maximize the loss of a deep learning model while keeping the perturbation within a specified norm constraint. This method is an extension of the Fast Gradient Sign Method (FGSM) but applies multiple iterative updates with projection to ensure that the perturbation remains within a bounded region. PGD is particularly effective in generating adversarial examples that can mislead neural networks while remaining imperceptible to the human eye, which is how we plan to embed our watermark. 
-Given a neural network classifier $f(\cdot)$ with parameters $\theta$, the PGD attack aims to find an adversarial perturbation $\delta$ such that the perturbed input $x' = x + \delta$ is misclassified while ensuring $\delta$ remains within a bounded set. 
-
-*Whitebox Attack*
-For our new watermark, we use the PGD attack as a base. However, we pick a random subset of $k$ labels and aim to increase the logit scores (model’s predicted probability) for these labels. The watermark is designed to subtly alter the image such that the model's output probabilities for specific target classes are significantly affected, while the overall visual appearance of the image remains largely unchanged.
-
-The watermark is applied as an adversarial perturbation $\delta$ to the original image $x$. The perturbation is generated using a targeted adversarial attack, which aims to maximize the model's confidence in a set of target classes while keeping the primary classification stable. The perturbation is constrained by an $\ell_\infty$-norm bound to ensure that it remains imperceptible.
-
-*Blackbox Attack*
-In our black-box watermarking approach, we introduce a perturbation that alters the model’s
-output probabilities for a randomly selected subset of k labels without direct access to the
-model’s gradients. Unlike the white-box approach, where the adversarial perturbation is
-optimized using gradients, the black-box method relies on an iterative query-based opti-
-mization process.The watermarking process involves modifying the input image x to maximize the probability of specific target labels. 
-**Results**
-
-**Conclusion**
-
-**References**
-
-**About Us** 
-Andy Truong 
-amt007@ucsd.edu
-
-Anushka Purohit
-apurohit@ucsd.edu
-
-Mentor: Yu-Xiang Wang
-yuxiangw@ucsd.edu -->
-
 # Adversarial Attacks on Watermarks
 
 ## Overview
@@ -120,10 +78,11 @@ Our watermarking techniques successfully increased the logit scores of target la
 2. **ROC Curve Analysis**: Target labels showed high AUC values (e.g., Sealyham Terrier with AUC of 0.93), indicating excellent model performance in distinguishing these classes.
 ![White-box ROC](assets/whitebox_oc_curve_label_190.png)
 ![Black-box ROC](assets/bb_roc_curve_label_190.png)
-3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores.
+3. **Visual Quality**: By selecting appropriate epsilon values, we ensured that perturbations remained subtle, preserving image appearance while effectively raising logit scores. <br>
+
 **White-box Approach - Before and After Watermarking:**
 ![White-box Watermarking](assets/whitebox_comparison.png)
-*Comparison of preprocessing, perturbation noise, and watermarked image*
+*Comparison of preprocessing, perturbation noise, and watermarked image* <br>
 **Black-box Approach - Before and After Watermarking:**
 ![Black-box Watermarking](assets/blackbox_comparison.png)
 *Comparison of preprocessing, perturbation noise, and watermarked image*
